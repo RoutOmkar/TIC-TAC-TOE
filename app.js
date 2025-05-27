@@ -1,10 +1,11 @@
 let AccessBtn = document.querySelectorAll(".box");
 let AccessResetBtn = document.getElementById("reset-btn");
 let AccessNewBtn = document.getElementById("new-btn");
-let AccessMsgContainer = document.querySelector(".msg-container"); // Fixed: single container
+let AccessMsgContainer = document.querySelector(".msg-container");
 let AccessShowWinnerBtn = document.getElementById("msg");
 
 let turn0 = true;
+let count=0;
 
 const WinningZone = [
     [0, 1, 2],
@@ -27,6 +28,7 @@ AccessBtn.forEach((box) => {
             turn0 = true;
         }
         box.disabled = true;
+        count=count+1;
         checkResult();
     });
 });
@@ -35,6 +37,10 @@ const showWinner = (winner) => {
     AccessShowWinnerBtn.innerText = `Winner is ${winner}`;
     AccessMsgContainer.classList.remove("hide");
 };
+const showWinner1 =() =>{
+    AccessShowWinnerBtn.innerText = `Match is Tie.`;
+    AccessMsgContainer.classList.remove("hide");
+}
 
 const checkResult = () => {
     for (let i of WinningZone) {
@@ -47,6 +53,10 @@ const checkResult = () => {
                 showWinner(value1);
                 disableAllButtons();
                 return;
+            }else{
+                if(count==9){
+                    showWinner1();
+                }
             }
         }
     }
@@ -57,8 +67,6 @@ const disableAllButtons = () => {
         box.disabled = true;
     });
 };
-
-// Optional: Reset/New Game functionality
 AccessResetBtn.addEventListener("click", () => {
     resetGame();
 });
